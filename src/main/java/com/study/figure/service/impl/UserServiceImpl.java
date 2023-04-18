@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
 
     public User signUpUser(Map<String, Object> saveData) throws Exception {
         User user = setUserData(saveData);
-        if(user.validation()) return null;
+        if(user == null || user.validation()) return null;
         userMapper.saveUser(user);
 
         return user;

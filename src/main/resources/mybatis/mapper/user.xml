@@ -3,5 +3,7 @@
 <mapper namespace="com.study.figure.mybatis.UserMapper">
 	<insert id="saveUser" parameterType="com.study.figure.dto.User" >
         <!-- Insert 문 -->
+		INSERT INTO users(email, password, j_desc, name, status, create_date_time, salt)
+		VALUES (#{email}, #{password}, #{desc}, #{name}, '01', now(), #{salt});
 	</insert>
 </mapper>
