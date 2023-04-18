@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
     }
 
     private User setUserData(Map<String, Object> saveData) {
-        if(saveData != null) return null;
+        if(saveData == null) return null;
         User user = new User();
         if(saveData.get("userId") != null)
             user.setUserId(Long.valueOf(saveData.get("userId").toString()));
