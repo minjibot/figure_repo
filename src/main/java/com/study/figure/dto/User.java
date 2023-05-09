@@ -21,7 +21,8 @@ public class User {
 
     
     public boolean validation() {
-        return StringUtils.isEmpty(this.email) || StringUtils.isEmpty(this.password) || StringUtils.isEmpty(this.name);
+        return StringUtils.isEmpty(this.email) || StringUtils.isEmpty(this.password) || 
+        StringUtils.isEmpty(this.name) || StringUtils.isEmpty(this.salt);
     }    
 
 }
