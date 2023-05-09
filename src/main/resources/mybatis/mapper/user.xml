@@ -6,4 +6,8 @@
 		INSERT INTO users(email, password, j_desc, name, status, create_date_time, salt)
 		VALUES (#{email}, #{password}, #{desc}, #{name}, '01', now(), #{salt});
 	</insert>
+
+	<select id="getUserByEmail" parameterType="String" resultType="com.study.figure.dto.User" >
+		SELECT * FROM users WHERE email = #{email};
+	</select>
 </mapper>

@@ -3,8 +3,10 @@ package com.study.figure.service.impl;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +85,40 @@ public class UserServiceImpl implements UserService{
         }
 
         return sb.toString();
+    }
+
+    public Map<String, Object> loginUser(Map<String, Object> loginData) throws Exception {
+        if(loginData == null) return null;
+        String email = loginData.get("email") != null ? (String) loginData.get("email") : "";
+        String password = loginData.get("password") != null ? (String) loginData.get("password") : "";
+
+        if(StringUtils.isAnyEmpty(email, password)) return null;
+
+        User user = userMapper.getUserByEmail(email);
+
+        String result = "fail";
+        String msg = "";
+
+        if(user == null) {
+            msg = "존재하지 않는 아이디입니다.";
+        } else {
+            String salt = user.getSalt();
+            String dbPw = user.getPassword();
+            String encryptPw = getEncrypt(password, salt);
+            if(StringUtils.equals(dbPw, encryptPw)) {
+                result = "success";
+            } else {
+                msg = "비밀번호를 확인해주세요.";
+            }
+        }
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("result", result);
+        resultMap.put("msg", msg);
+
+        
+    
+        return resultMap;
     }
 }
 
