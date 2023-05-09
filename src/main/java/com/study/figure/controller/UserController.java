@@ -16,7 +16,7 @@ import com.study.figure.service.UserService;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
     
     @Autowired
