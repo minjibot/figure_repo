@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.figure.mybatis.UserMapper">
+	<insert id="saveUser" parameterType="com.study.figure.dto.User" >
+        <!-- Insert 문 -->
+		INSERT INTO users(email, password, j_desc, name, status, create_date_time, salt)
+		VALUES (#{email}, #{password}, #{desc}, #{name}, '01', now(), #{salt});
+	</insert>
+
+	<select id="getUserByEmail" parameterType="String" resultType="com.study.figure.dto.User" >
+		SELECT * FROM users WHERE email = #{email};
+	</select>
+</mapper>
