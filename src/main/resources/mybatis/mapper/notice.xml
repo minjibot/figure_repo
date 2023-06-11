@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.figure.mybatis.NoticeMapper">
+
+	<select id="getUserNotices" parameterType="Long" resultType="com.study.figure.dto.Notice" >
+		SELECT
+			*
+		FROM
+			notice n
+		INNER JOIN
+			user_notice_mapping m
+		ON
+			n.notice_id = m.notice_id
+		WHERE
+			m.user_id = #{userId}
+	</select>
+</mapper>
