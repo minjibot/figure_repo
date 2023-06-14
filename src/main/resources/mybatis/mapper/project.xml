@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.figure.mybatis.ProjectMapper">
+
+	<select id="getUserProjects" parameterType="Long" resultType="com.study.figure.dto.Project" >
+		SELECT
+			*
+		FROM
+			project p
+		INNER JOIN
+			user_project_mapping m
+		ON
+			p.project_id = m.project_id
+		WHERE
+			m.user_id = #{userId}
+	</select>
+</mapper>
