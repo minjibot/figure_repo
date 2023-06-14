@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.study.figure.dto.User;
 import com.study.figure.mybatis.UserMapper;
+import com.study.figure.service.TokenProvider;
 import com.study.figure.service.UserService;
 
 @Service
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService{
     
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    TokenProvider tokenProvider;
 
     public User signUpUser(Map<String, Object> saveData) throws Exception {
         User user = setUserData(saveData);
@@ -98,6 +102,9 @@ public class UserServiceImpl implements UserService{
 
         String result = "fail";
         String msg = "";
+        String token = "";
+        //int exprTime = 3600000;
+
 
         if(user == null) {
             msg = "존재하지 않는 아이디입니다.";
@@ -107,6 +114,7 @@ public class UserServiceImpl implements UserService{
             String encryptPw = getEncrypt(password, salt);
             if(StringUtils.equals(dbPw, encryptPw)) {
                 result = "success";
+                token = tokenProvider.createToken(user);
             } else {
                 msg = "비밀번호를 확인해주세요.";
             }
@@ -115,6 +123,7 @@ public class UserServiceImpl implements UserService{
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("result", result);
         resultMap.put("msg", msg);
+        resultMap.put("token", token);
 
         
     
