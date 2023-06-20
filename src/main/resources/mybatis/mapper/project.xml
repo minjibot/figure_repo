@@ -2,8 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.figure.mybatis.ProjectMapper">
 	<insert id="saveProject" parameterType="com.study.figure.dto.Project" >
-        <!-- Insert 문 -->
 		INSERT INTO project(name, j_desc, status, create_user_id, create_date_time)
 		VALUES (#{name}, #{jDesc}, '01', '01', now());
 	</insert>
+
+	<select id="getUserProjects" parameterType="Long" resultType="com.study.figure.dto.Project" >
+		SELECT
+			*
+		FROM
+			project p
+		INNER JOIN
+			user_project_mapping m
+		ON
+			p.project_id = m.project_id
+		WHERE
+			m.user_id = #{userId}
+	</select>
+	
+	<select id="getProjects" parameterType="Long" resultType="hashmap">
+		SELECT p.project_id as "id"
+				, p.name as "name"
+				, p.j_desc as "description"
+				, CASE WHEN b.bookmark_id IS NOT NULL THEN true ELSE false END as "bookmarked"
+		FROM project p
+		INNER JOIN user_project_mapping m
+		ON p.project_id = m.project_id
+		LEFT JOIN bookmark b ON p.project_id = b.project_id AND b.user_id = #{userId}
+		WHERE m.user_id = #{userId}
+	</select>
+
+	<select id="getBookmarkCount" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM bookmark
+		WHERE type = 'P' AND user_id = #{userId} AND project_id = #{projectId}
+	</select>
+
+	<insert id="addBookmark" parameterType="hashmap">
+		INSERT INTO bookmark(user_id, type, project_id)
+		VALUES (#{userId}, 'P', #{projectId});
+	</insert>
+
+	<delete id="deleteBookmark" parameterType="hashmap">
+		DELETE
+		FROM bookmark
+		WHERE user_id = #{userId} AND project_id = #{projectId}
+	</delete>
+
+	<select id="getProjectUsers" parameterType="hashmap" resultType="hashmap">
+		SELECT p.project_id as "proejectId"
+				, p.name as "projectName"
+				, u.name as "userName"
+				, u.j_desc as "userDesc"
+				, u.email as "userEmail"
+				, u.user_id as "userId"
+		FROM project p
+		INNER JOIN user_project_mapping m
+		ON p.project_id = m.project_id
+		INNER JOIN users u
+		ON m.user_id = u.user_id
+		WHERE m.user_id = #{userId} AND m.project_id = #{projectId}
+	</select> 
 </mapper>

@@ -8,6 +8,16 @@
 	</insert>
 
 	<select id="getUserByEmail" parameterType="String" resultType="com.study.figure.dto.User" >
-		SELECT * FROM users WHERE email = #{email};
+		SELECT 
+			user_id as "userId", 
+			email, 
+			password, 
+			j_desc as "desc", 
+			name, 
+			status, 
+			salt,
+			create_date_time as "createDateTime", 
+			update_date_time as "updateDateTime"
+		FROM users WHERE email = #{email};
 	</select>
 </mapper>
