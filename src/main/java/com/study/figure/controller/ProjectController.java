@@ -18,8 +18,8 @@ public class ProjectController {
 	private ProjectService projectService;
 
 	// userController로 옮겨야?
-	@PostMapping("/user/{userId}/createProject")
-	public ResponseEntity<Map<String, Object>> create(@RequestBody Project saveData) throws Exception {
+	@PostMapping("/create")
+	public ResponseEntity<Map<String, Object>> createProject(@RequestBody Project saveData) throws Exception {
 		ResponseEntity<Map<String, Object>> rs = null;
 
 		try {
