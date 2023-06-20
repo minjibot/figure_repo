@@ -1,28 +1,25 @@
 package com.study.figure.dto;
 
-import java.time.LocalDateTime;
-
 import io.micrometer.common.util.StringUtils;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class Project {
 
+public class Project {
     private Long projectId;
     private String name;
-    private String jDesc;
+    private String description;
     private String status;
-    private String createUserId;
+    private Long createUserId;
     private LocalDateTime createDateTime;
-    private String updateUserId;
+    private Long updateUserId;
     private LocalDateTime updateDateTime;
 
     public boolean validation() {
         // userId도 추가해야함
         return StringUtils.isEmpty(this.name);
     }
-
 }
