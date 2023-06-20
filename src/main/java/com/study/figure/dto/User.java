@@ -19,7 +19,6 @@ public class User {
     private LocalDateTime createDateTime;
     private LocalDateTime updateDateTime;
 
-    
     public boolean validation() {
         return StringUtils.isEmpty(this.email) || StringUtils.isEmpty(this.password) || 
         StringUtils.isEmpty(this.name) || StringUtils.isEmpty(this.salt);
