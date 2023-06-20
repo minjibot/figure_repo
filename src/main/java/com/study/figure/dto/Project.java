@@ -3,26 +3,26 @@ package com.study.figure.dto;
 import java.time.LocalDateTime;
 
 import io.micrometer.common.util.StringUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class User {
-    private Long userId;
-    private String email;
-    private String password;
-    private String desc;
+public class Project {
+
+    private Long projectId;
     private String name;
+    private String jDesc;
     private String status;
-    private String salt;
+    private String createUserId;
     private LocalDateTime createDateTime;
+    private String updateUserId;
     private LocalDateTime updateDateTime;
 
     public boolean validation() {
-        return StringUtils.isEmpty(this.email) || StringUtils.isEmpty(this.password) || 
-        StringUtils.isEmpty(this.name) || StringUtils.isEmpty(this.salt);
-    }    
+        // userId도 추가해야함
+        return StringUtils.isEmpty(this.name);
+    }
 
 }
-
