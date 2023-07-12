@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.figure.mybatis.TemporaryNumberMapper">
+    <insert id="saveTemporaryNumber" parameterType="com.study.figure.dto.TemporaryNumber" >
+		INSERT INTO temporary_number(email, temporary_number)
+		VALUES (#{email}, #{temporaryNumber});
+	</insert>
+
+	<delete id="deleteTemporaryNumber" parameterType="com.study.figure.dto.TemporaryNumber" >
+		DELETE FROM temporary_number
+		WHERE email = #{email}
+		AND temporary_number = #{temporaryNumber}
+	</delete>
+
+	<select id="temporaryNumberCheck" parameterType="com.study.figure.dto.TemporaryNumber" resultType="int" >
+		SELECT 
+			count(temporary_number)
+		FROM temporary_number 
+		WHERE email = #{email}
+		AND temporary_number = #{temporaryNumber}
+	</select>
+</mapper>
