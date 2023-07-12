@@ -20,4 +20,10 @@
 			update_date_time as "updateDateTime"
 		FROM users WHERE email = #{email};
 	</select>
+
+	<select id="emailCheck" parameterType="String" resultType="int" >
+		SELECT 
+			count(email)
+		FROM users WHERE email = #{email};
+	</select>
 </mapper>
