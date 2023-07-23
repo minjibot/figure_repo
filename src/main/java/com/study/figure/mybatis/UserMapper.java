@@ -11,4 +11,5 @@ public interface UserMapper {
     
     public void saveUser(User user);
     public User getUserByEmail(String email);
+    public int emailCheck(String email);
 }
