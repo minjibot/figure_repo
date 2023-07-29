@@ -19,9 +19,9 @@ public class User {
     private LocalDateTime createDateTime;
     private LocalDateTime updateDateTime;
 
-    public boolean validation() {
+    public boolean validation(boolean isCreate) {
         return StringUtils.isEmpty(this.email) || StringUtils.isEmpty(this.password) || 
-        StringUtils.isEmpty(this.name) || StringUtils.isEmpty(this.salt);
+        StringUtils.isEmpty(this.salt) || (isCreate && StringUtils.isEmpty(this.name));
     }    
 
 }

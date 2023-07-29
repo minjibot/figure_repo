@@ -28,7 +28,7 @@ public class TokenProvider {
      * @return
      */
     public String createToken (User user) {
-        if(user == null || user.validation()) return "";
+        if(user == null || user.validation(true)) return "";
 
         String id = Long.toString(user.getUserId());
         
