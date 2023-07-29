@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.figure.mybatis.UserMapper">
 	<insert id="saveUser" parameterType="com.study.figure.dto.User" >
-        <!-- Insert 문 -->
 		INSERT INTO users(email, password, j_desc, name, status, create_date_time, salt)
 		VALUES (#{email}, #{password}, #{desc}, #{name}, '01', now(), #{salt});
 	</insert>
@@ -26,4 +25,15 @@
 			count(email)
 		FROM users WHERE email = #{email};
 	</select>
+
+	<update id="updateUserByEmail" parameterType="com.study.figure.dto.User">
+		UPDATE users
+		SET 
+			<if test="password != null and password != ''">password=#{password},</if>
+			<if test="desc != null and desc != ''">j_desc=#{desc},</if>
+			<if test="status != null and status != ''">status=#{status},</if>
+			<if test="salt != null and salt != ''">salt=#{salt},</if>
+			update_date_time = now()
+		WHERE email = #{email};
+	</update>
 </mapper>

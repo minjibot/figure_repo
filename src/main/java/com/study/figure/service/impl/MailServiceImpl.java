@@ -58,16 +58,24 @@ public class MailServiceImpl implements MailService{
         return result;
     }
     
-    public String authenticateEmail(String email) throws Exception {
-        if(StringUtils.isEmpty(email)) return null;
+    /**
+     * @param email
+	 * @param type - 01: 회원가입, 02: 비밀번호 찾기
+	 * @return
+	 * @throws Exception
+	 */
+    public String authenticateEmail(String email, String type) throws Exception {
+        if(StringUtils.isAnyEmpty(email, type)) return null;
         
         int emailCheck = userMapper.emailCheck(email);
         String result;
-        if(emailCheck > 0) {
+        if(StringUtils.equals(type,"01") && emailCheck > 0) {
             result = "isEmailDuplicated";
+        } else if(StringUtils.equals(type,"02") && emailCheck == 0) {
+            result = "isNotExistEmail";
         } else {
             String temporaryNumber =  getTemporaryNumber(); // front 쪽으로 가져가서 사용자가 입력한 임시번호값과 동일한지 체크 해야함
-            result = sendHtmlMail(email, "Figure 회원가입 인증", getTemporaryNumberHtmlStr(temporaryNumber));
+            result = sendHtmlMail(email, StringUtils.equals(type,"01") ? "Figure 회원가입 인증" : "Figure 비밀번호 찾기", getTemporaryNumberHtmlStr(temporaryNumber));
             if(StringUtils.equals(result, "success")) {
                 TemporaryNumber tm = new TemporaryNumber(email, temporaryNumber);
                 temporaryNumberMapper.saveTemporaryNumber(tm);

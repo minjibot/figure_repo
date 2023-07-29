@@ -8,4 +8,6 @@ public interface UserService {
     public User signUpUser(Map<String, Object> user) throws Exception;
 
     public Map<String, Object> loginUser(Map<String, Object> loginData) throws Exception;
+
+    public String userUpdateByEmail(Map<String, Object> saveData) throws Exception;
 }
