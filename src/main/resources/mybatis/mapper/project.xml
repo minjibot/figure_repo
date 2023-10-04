@@ -62,4 +62,21 @@
 		ON m.user_id = u.user_id
 		WHERE m.user_id = #{userId} AND m.project_id = #{projectId}
 	</select> 
+
+	<select id="getProjectCategorys" parameterType="Long" resultType="hashmap">
+		SELECT
+			c.category_id AS "id",
+			c.name AS "title",
+			(
+				SELECT json_agg(jsonb_build_object('id', w.work_id, 'text', w.name))
+				FROM work w
+				WHERE w.project_id = c.project_id
+				AND w.category_id = c.category_id
+				AND w.status = '01'
+			)::jsonb AS "works"
+		FROM
+			category c
+		WHERE
+			c.project_id = #{projectId}
+	</select>
 </mapper>

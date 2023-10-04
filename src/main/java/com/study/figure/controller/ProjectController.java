@@ -94,4 +94,19 @@ public class ProjectController {
 
 		return rs;
 	}
+
+	@GetMapping("/{projectId}/categorys")
+	public ResponseEntity<List<Map<String, Object>>> getProjectCategorys(@PathVariable Long projectId) throws Exception {
+		ResponseEntity<List<Map<String, Object>>> rs = null;
+
+		try {
+			List<Map<String, Object>> result = projectService.getProjectCategorys(projectId);
+			rs = new ResponseEntity<List<Map<String, Object>>>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			rs = new ResponseEntity<List<Map<String, Object>>>(HttpStatus.BAD_REQUEST);
+		}
+
+		return rs;
+	}
 }
