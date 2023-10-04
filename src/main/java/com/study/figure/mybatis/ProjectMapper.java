@@ -24,4 +24,6 @@ public interface ProjectMapper {
     public int deleteBookmark(Map<String, Object> data);
 
     public List<Map<String, Object>> getProjectUsers(Map<String, Object> data);
+
+    public List<Map<String, Object>> getProjectCategorys(Long projectId);
 }

@@ -5,8 +5,10 @@ import com.study.figure.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.figure.dto.Project;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,5 +77,29 @@ public class ProjectServiceImpl implements ProjectService {
 
     public List<Map<String, Object>> getProjectUsers(Map<String, Object> data) throws Exception {
         return projectMapper.getProjectUsers(data);
+    }
+
+    public List<Map<String, Object>> getProjectCategorys(Long projectId) throws Exception {
+        List<Map<String, Object>> categorys = projectMapper.getProjectCategorys(projectId);
+
+        if(categorys != null && categorys.size() > 0) {
+            categorys.stream()
+                .forEach(map -> {
+                    List<Map<String, Object>> works = map.get("works") != null ? parseJsonToList(map.get("works").toString()) : new ArrayList<>();
+                    map.put("works", works);
+                });
+        }
+
+        return categorys;
+    }
+
+    private static List<Map<String, Object>> parseJsonToList(String json) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(json, List.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }

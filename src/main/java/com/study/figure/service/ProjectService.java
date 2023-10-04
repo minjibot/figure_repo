@@ -15,4 +15,6 @@ public interface ProjectService {
     public int saveBookmark(Map<String, Object> data) throws Exception;
 
     public List<Map<String, Object>> getProjectUsers(Map<String, Object> data) throws Exception;
+
+    public List<Map<String, Object>> getProjectCategorys(Long projectId) throws Exception;
 }
